@@ -1,0 +1,83 @@
+type User {
+    """User"""
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    name: String! @unique
+    discussions: [Discussion!]! @relation(name: "AuthorOfContent")
+    spaces: [Space!]! @relation(name: "FollowerOfSpace")
+    groups: [Group!]! @relation(name: "MemberOfGroup")
+    following: [User!]! @relation(name: "FollowerOfUser")
+    followers: [User!]! @relation(name: "FollowerOfUser")
+    likedDiscussions: [Discussion!]! @relation(name: "LikedDiscussion")
+    sharedDiscussions: [Discussion!]! @relation(name: "SharedDiscussion")
+    savedDiscussions: [Discussion!]! @relation(name: "SavedDiscussion")
+    savedGroups: [Group!]! @relation(name: "SavedGroup")
+    savedSpaces: [Space!]! @relation(name: "SavedSpace")
+    adminOfGroup: [Group!]! @relation(name: "AdminOfGroup")
+    adminOfSpace: [Space!]! @relation(name: "AdminOfGroup")
+}
+
+type Group {
+    """Group"""
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    name: String! @unique
+    description: String!
+    admin: User! @relation(name: "AdminOfGroup")
+    moderators: [User!]! @relation(name: "ModeratorOfGroup")
+    followers: [User!]! @relation(name: "MemberOfGroup")
+    discussions: [Discussion!]! @relation(name: "GroupDiscussion")
+    spaces: [Space!]! @relation(name: "MemberOfSpace")
+}
+
+type Space {
+    """Space"""
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    admin: User! @relation(name: "AdminOfSpace")
+    name: String! @unique
+    description: String!
+    tags: [Tag!]! @relation(name: "TagOnSpace")
+    groups: [Group!]! @relation(name: "MemberOfSpace")
+    followers: [User!]! @relation(name: "FollowerOfSpace")
+}
+
+type Discussion {
+    """Discussion"""
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    author: User! @relation(name: "AuthorOfContent")
+    group: Group! @relation(name: "GroupDiscussion")
+    title: String!
+    body: String!
+    tags: [Tag!]! @relation(name: "TagOnDiscussion")
+    replies: [Reply!]! @relation(name: "RepliesOnDiscussion")
+    likedBy: [User!]! @relation(name: "LikedPosts")
+    sharedBy: [User!]! @relation(name: "SharedPosts")
+}
+
+type Reply {
+    """Reply"""
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    author: User! @relation(name: "AuthorOfReply")
+    discussion: Discussion! @relation(name: "RepliesOnDiscussion")
+    parent: Reply @relation(name: "ChildOfReply")
+    children: [Reply!]! @relation(name: "ParentOfReply")
+    body: String!
+    likedBy: [User!]! @relation(name: "LikedReplies")
+}
+
+type Tag {
+    """Tag"""
+    id: ID! @unique
+    createdAt: DateTime!
+    name: String! @unique
+    spaces: [Space!]! @relation(name: "TagOnSpace")
+    discussions: [Discussion!]! @relation(name: "TagOnDiscussion")
+}

@@ -1,0 +1,2662 @@
+type AggregateDiscussion {
+  count: Int!
+}
+
+type AggregateGroup {
+  count: Int!
+}
+
+type AggregateReply {
+  count: Int!
+}
+
+type AggregateSpace {
+  count: Int!
+}
+
+type AggregateTag {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+scalar DateTime
+
+type Discussion {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  author: User!
+  group: Group!
+  title: String!
+  body: String!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  replies(where: ReplyWhereInput, orderBy: ReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Reply!]
+  likedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  sharedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+}
+
+type DiscussionConnection {
+  pageInfo: PageInfo!
+  edges: [DiscussionEdge]!
+  aggregate: AggregateDiscussion!
+}
+
+input DiscussionCreateInput {
+  author: UserCreateOneWithoutDiscussionsInput!
+  group: GroupCreateOneWithoutDiscussionsInput!
+  title: String!
+  body: String!
+  tags: TagCreateManyWithoutDiscussionsInput
+  replies: ReplyCreateManyWithoutDiscussionInput
+  likedBy: UserCreateManyInput
+  sharedBy: UserCreateManyInput
+}
+
+input DiscussionCreateManyInput {
+  create: [DiscussionCreateInput!]
+  connect: [DiscussionWhereUniqueInput!]
+}
+
+input DiscussionCreateManyWithoutAuthorInput {
+  create: [DiscussionCreateWithoutAuthorInput!]
+  connect: [DiscussionWhereUniqueInput!]
+}
+
+input DiscussionCreateManyWithoutGroupInput {
+  create: [DiscussionCreateWithoutGroupInput!]
+  connect: [DiscussionWhereUniqueInput!]
+}
+
+input DiscussionCreateManyWithoutTagsInput {
+  create: [DiscussionCreateWithoutTagsInput!]
+  connect: [DiscussionWhereUniqueInput!]
+}
+
+input DiscussionCreateOneWithoutRepliesInput {
+  create: DiscussionCreateWithoutRepliesInput
+  connect: DiscussionWhereUniqueInput
+}
+
+input DiscussionCreateWithoutAuthorInput {
+  group: GroupCreateOneWithoutDiscussionsInput!
+  title: String!
+  body: String!
+  tags: TagCreateManyWithoutDiscussionsInput
+  replies: ReplyCreateManyWithoutDiscussionInput
+  likedBy: UserCreateManyInput
+  sharedBy: UserCreateManyInput
+}
+
+input DiscussionCreateWithoutGroupInput {
+  author: UserCreateOneWithoutDiscussionsInput!
+  title: String!
+  body: String!
+  tags: TagCreateManyWithoutDiscussionsInput
+  replies: ReplyCreateManyWithoutDiscussionInput
+  likedBy: UserCreateManyInput
+  sharedBy: UserCreateManyInput
+}
+
+input DiscussionCreateWithoutRepliesInput {
+  author: UserCreateOneWithoutDiscussionsInput!
+  group: GroupCreateOneWithoutDiscussionsInput!
+  title: String!
+  body: String!
+  tags: TagCreateManyWithoutDiscussionsInput
+  likedBy: UserCreateManyInput
+  sharedBy: UserCreateManyInput
+}
+
+input DiscussionCreateWithoutTagsInput {
+  author: UserCreateOneWithoutDiscussionsInput!
+  group: GroupCreateOneWithoutDiscussionsInput!
+  title: String!
+  body: String!
+  replies: ReplyCreateManyWithoutDiscussionInput
+  likedBy: UserCreateManyInput
+  sharedBy: UserCreateManyInput
+}
+
+type DiscussionEdge {
+  node: Discussion!
+  cursor: String!
+}
+
+enum DiscussionOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  title_ASC
+  title_DESC
+  body_ASC
+  body_DESC
+}
+
+type DiscussionPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String!
+  body: String!
+}
+
+input DiscussionScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  body: String
+  body_not: String
+  body_in: [String!]
+  body_not_in: [String!]
+  body_lt: String
+  body_lte: String
+  body_gt: String
+  body_gte: String
+  body_contains: String
+  body_not_contains: String
+  body_starts_with: String
+  body_not_starts_with: String
+  body_ends_with: String
+  body_not_ends_with: String
+  AND: [DiscussionScalarWhereInput!]
+  OR: [DiscussionScalarWhereInput!]
+  NOT: [DiscussionScalarWhereInput!]
+}
+
+type DiscussionSubscriptionPayload {
+  mutation: MutationType!
+  node: Discussion
+  updatedFields: [String!]
+  previousValues: DiscussionPreviousValues
+}
+
+input DiscussionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: DiscussionWhereInput
+  AND: [DiscussionSubscriptionWhereInput!]
+  OR: [DiscussionSubscriptionWhereInput!]
+  NOT: [DiscussionSubscriptionWhereInput!]
+}
+
+input DiscussionUpdateDataInput {
+  author: UserUpdateOneRequiredWithoutDiscussionsInput
+  group: GroupUpdateOneRequiredWithoutDiscussionsInput
+  title: String
+  body: String
+  tags: TagUpdateManyWithoutDiscussionsInput
+  replies: ReplyUpdateManyWithoutDiscussionInput
+  likedBy: UserUpdateManyInput
+  sharedBy: UserUpdateManyInput
+}
+
+input DiscussionUpdateInput {
+  author: UserUpdateOneRequiredWithoutDiscussionsInput
+  group: GroupUpdateOneRequiredWithoutDiscussionsInput
+  title: String
+  body: String
+  tags: TagUpdateManyWithoutDiscussionsInput
+  replies: ReplyUpdateManyWithoutDiscussionInput
+  likedBy: UserUpdateManyInput
+  sharedBy: UserUpdateManyInput
+}
+
+input DiscussionUpdateManyDataInput {
+  title: String
+  body: String
+}
+
+input DiscussionUpdateManyInput {
+  create: [DiscussionCreateInput!]
+  update: [DiscussionUpdateWithWhereUniqueNestedInput!]
+  upsert: [DiscussionUpsertWithWhereUniqueNestedInput!]
+  delete: [DiscussionWhereUniqueInput!]
+  connect: [DiscussionWhereUniqueInput!]
+  set: [DiscussionWhereUniqueInput!]
+  disconnect: [DiscussionWhereUniqueInput!]
+  deleteMany: [DiscussionScalarWhereInput!]
+  updateMany: [DiscussionUpdateManyWithWhereNestedInput!]
+}
+
+input DiscussionUpdateManyMutationInput {
+  title: String
+  body: String
+}
+
+input DiscussionUpdateManyWithoutAuthorInput {
+  create: [DiscussionCreateWithoutAuthorInput!]
+  delete: [DiscussionWhereUniqueInput!]
+  connect: [DiscussionWhereUniqueInput!]
+  set: [DiscussionWhereUniqueInput!]
+  disconnect: [DiscussionWhereUniqueInput!]
+  update: [DiscussionUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [DiscussionUpsertWithWhereUniqueWithoutAuthorInput!]
+  deleteMany: [DiscussionScalarWhereInput!]
+  updateMany: [DiscussionUpdateManyWithWhereNestedInput!]
+}
+
+input DiscussionUpdateManyWithoutGroupInput {
+  create: [DiscussionCreateWithoutGroupInput!]
+  delete: [DiscussionWhereUniqueInput!]
+  connect: [DiscussionWhereUniqueInput!]
+  set: [DiscussionWhereUniqueInput!]
+  disconnect: [DiscussionWhereUniqueInput!]
+  update: [DiscussionUpdateWithWhereUniqueWithoutGroupInput!]
+  upsert: [DiscussionUpsertWithWhereUniqueWithoutGroupInput!]
+  deleteMany: [DiscussionScalarWhereInput!]
+  updateMany: [DiscussionUpdateManyWithWhereNestedInput!]
+}
+
+input DiscussionUpdateManyWithoutTagsInput {
+  create: [DiscussionCreateWithoutTagsInput!]
+  delete: [DiscussionWhereUniqueInput!]
+  connect: [DiscussionWhereUniqueInput!]
+  set: [DiscussionWhereUniqueInput!]
+  disconnect: [DiscussionWhereUniqueInput!]
+  update: [DiscussionUpdateWithWhereUniqueWithoutTagsInput!]
+  upsert: [DiscussionUpsertWithWhereUniqueWithoutTagsInput!]
+  deleteMany: [DiscussionScalarWhereInput!]
+  updateMany: [DiscussionUpdateManyWithWhereNestedInput!]
+}
+
+input DiscussionUpdateManyWithWhereNestedInput {
+  where: DiscussionScalarWhereInput!
+  data: DiscussionUpdateManyDataInput!
+}
+
+input DiscussionUpdateOneRequiredWithoutRepliesInput {
+  create: DiscussionCreateWithoutRepliesInput
+  update: DiscussionUpdateWithoutRepliesDataInput
+  upsert: DiscussionUpsertWithoutRepliesInput
+  connect: DiscussionWhereUniqueInput
+}
+
+input DiscussionUpdateWithoutAuthorDataInput {
+  group: GroupUpdateOneRequiredWithoutDiscussionsInput
+  title: String
+  body: String
+  tags: TagUpdateManyWithoutDiscussionsInput
+  replies: ReplyUpdateManyWithoutDiscussionInput
+  likedBy: UserUpdateManyInput
+  sharedBy: UserUpdateManyInput
+}
+
+input DiscussionUpdateWithoutGroupDataInput {
+  author: UserUpdateOneRequiredWithoutDiscussionsInput
+  title: String
+  body: String
+  tags: TagUpdateManyWithoutDiscussionsInput
+  replies: ReplyUpdateManyWithoutDiscussionInput
+  likedBy: UserUpdateManyInput
+  sharedBy: UserUpdateManyInput
+}
+
+input DiscussionUpdateWithoutRepliesDataInput {
+  author: UserUpdateOneRequiredWithoutDiscussionsInput
+  group: GroupUpdateOneRequiredWithoutDiscussionsInput
+  title: String
+  body: String
+  tags: TagUpdateManyWithoutDiscussionsInput
+  likedBy: UserUpdateManyInput
+  sharedBy: UserUpdateManyInput
+}
+
+input DiscussionUpdateWithoutTagsDataInput {
+  author: UserUpdateOneRequiredWithoutDiscussionsInput
+  group: GroupUpdateOneRequiredWithoutDiscussionsInput
+  title: String
+  body: String
+  replies: ReplyUpdateManyWithoutDiscussionInput
+  likedBy: UserUpdateManyInput
+  sharedBy: UserUpdateManyInput
+}
+
+input DiscussionUpdateWithWhereUniqueNestedInput {
+  where: DiscussionWhereUniqueInput!
+  data: DiscussionUpdateDataInput!
+}
+
+input DiscussionUpdateWithWhereUniqueWithoutAuthorInput {
+  where: DiscussionWhereUniqueInput!
+  data: DiscussionUpdateWithoutAuthorDataInput!
+}
+
+input DiscussionUpdateWithWhereUniqueWithoutGroupInput {
+  where: DiscussionWhereUniqueInput!
+  data: DiscussionUpdateWithoutGroupDataInput!
+}
+
+input DiscussionUpdateWithWhereUniqueWithoutTagsInput {
+  where: DiscussionWhereUniqueInput!
+  data: DiscussionUpdateWithoutTagsDataInput!
+}
+
+input DiscussionUpsertWithoutRepliesInput {
+  update: DiscussionUpdateWithoutRepliesDataInput!
+  create: DiscussionCreateWithoutRepliesInput!
+}
+
+input DiscussionUpsertWithWhereUniqueNestedInput {
+  where: DiscussionWhereUniqueInput!
+  update: DiscussionUpdateDataInput!
+  create: DiscussionCreateInput!
+}
+
+input DiscussionUpsertWithWhereUniqueWithoutAuthorInput {
+  where: DiscussionWhereUniqueInput!
+  update: DiscussionUpdateWithoutAuthorDataInput!
+  create: DiscussionCreateWithoutAuthorInput!
+}
+
+input DiscussionUpsertWithWhereUniqueWithoutGroupInput {
+  where: DiscussionWhereUniqueInput!
+  update: DiscussionUpdateWithoutGroupDataInput!
+  create: DiscussionCreateWithoutGroupInput!
+}
+
+input DiscussionUpsertWithWhereUniqueWithoutTagsInput {
+  where: DiscussionWhereUniqueInput!
+  update: DiscussionUpdateWithoutTagsDataInput!
+  create: DiscussionCreateWithoutTagsInput!
+}
+
+input DiscussionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  author: UserWhereInput
+  group: GroupWhereInput
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  body: String
+  body_not: String
+  body_in: [String!]
+  body_not_in: [String!]
+  body_lt: String
+  body_lte: String
+  body_gt: String
+  body_gte: String
+  body_contains: String
+  body_not_contains: String
+  body_starts_with: String
+  body_not_starts_with: String
+  body_ends_with: String
+  body_not_ends_with: String
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  replies_every: ReplyWhereInput
+  replies_some: ReplyWhereInput
+  replies_none: ReplyWhereInput
+  likedBy_every: UserWhereInput
+  likedBy_some: UserWhereInput
+  likedBy_none: UserWhereInput
+  sharedBy_every: UserWhereInput
+  sharedBy_some: UserWhereInput
+  sharedBy_none: UserWhereInput
+  AND: [DiscussionWhereInput!]
+  OR: [DiscussionWhereInput!]
+  NOT: [DiscussionWhereInput!]
+}
+
+input DiscussionWhereUniqueInput {
+  id: ID
+}
+
+type Group {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String!
+  admin: User!
+  moderators(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  discussions(where: DiscussionWhereInput, orderBy: DiscussionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Discussion!]
+  spaces(where: SpaceWhereInput, orderBy: SpaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Space!]
+}
+
+type GroupConnection {
+  pageInfo: PageInfo!
+  edges: [GroupEdge]!
+  aggregate: AggregateGroup!
+}
+
+input GroupCreateInput {
+  name: String!
+  description: String!
+  admin: UserCreateOneWithoutAdminOfGroupInput!
+  moderators: UserCreateManyInput
+  followers: UserCreateManyWithoutGroupsInput
+  discussions: DiscussionCreateManyWithoutGroupInput
+  spaces: SpaceCreateManyWithoutGroupsInput
+}
+
+input GroupCreateManyInput {
+  create: [GroupCreateInput!]
+  connect: [GroupWhereUniqueInput!]
+}
+
+input GroupCreateManyWithoutAdminInput {
+  create: [GroupCreateWithoutAdminInput!]
+  connect: [GroupWhereUniqueInput!]
+}
+
+input GroupCreateManyWithoutFollowersInput {
+  create: [GroupCreateWithoutFollowersInput!]
+  connect: [GroupWhereUniqueInput!]
+}
+
+input GroupCreateManyWithoutSpacesInput {
+  create: [GroupCreateWithoutSpacesInput!]
+  connect: [GroupWhereUniqueInput!]
+}
+
+input GroupCreateOneWithoutDiscussionsInput {
+  create: GroupCreateWithoutDiscussionsInput
+  connect: GroupWhereUniqueInput
+}
+
+input GroupCreateWithoutAdminInput {
+  name: String!
+  description: String!
+  moderators: UserCreateManyInput
+  followers: UserCreateManyWithoutGroupsInput
+  discussions: DiscussionCreateManyWithoutGroupInput
+  spaces: SpaceCreateManyWithoutGroupsInput
+}
+
+input GroupCreateWithoutDiscussionsInput {
+  name: String!
+  description: String!
+  admin: UserCreateOneWithoutAdminOfGroupInput!
+  moderators: UserCreateManyInput
+  followers: UserCreateManyWithoutGroupsInput
+  spaces: SpaceCreateManyWithoutGroupsInput
+}
+
+input GroupCreateWithoutFollowersInput {
+  name: String!
+  description: String!
+  admin: UserCreateOneWithoutAdminOfGroupInput!
+  moderators: UserCreateManyInput
+  discussions: DiscussionCreateManyWithoutGroupInput
+  spaces: SpaceCreateManyWithoutGroupsInput
+}
+
+input GroupCreateWithoutSpacesInput {
+  name: String!
+  description: String!
+  admin: UserCreateOneWithoutAdminOfGroupInput!
+  moderators: UserCreateManyInput
+  followers: UserCreateManyWithoutGroupsInput
+  discussions: DiscussionCreateManyWithoutGroupInput
+}
+
+type GroupEdge {
+  node: Group!
+  cursor: String!
+}
+
+enum GroupOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+}
+
+type GroupPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String!
+}
+
+input GroupScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [GroupScalarWhereInput!]
+  OR: [GroupScalarWhereInput!]
+  NOT: [GroupScalarWhereInput!]
+}
+
+type GroupSubscriptionPayload {
+  mutation: MutationType!
+  node: Group
+  updatedFields: [String!]
+  previousValues: GroupPreviousValues
+}
+
+input GroupSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: GroupWhereInput
+  AND: [GroupSubscriptionWhereInput!]
+  OR: [GroupSubscriptionWhereInput!]
+  NOT: [GroupSubscriptionWhereInput!]
+}
+
+input GroupUpdateDataInput {
+  name: String
+  description: String
+  admin: UserUpdateOneRequiredWithoutAdminOfGroupInput
+  moderators: UserUpdateManyInput
+  followers: UserUpdateManyWithoutGroupsInput
+  discussions: DiscussionUpdateManyWithoutGroupInput
+  spaces: SpaceUpdateManyWithoutGroupsInput
+}
+
+input GroupUpdateInput {
+  name: String
+  description: String
+  admin: UserUpdateOneRequiredWithoutAdminOfGroupInput
+  moderators: UserUpdateManyInput
+  followers: UserUpdateManyWithoutGroupsInput
+  discussions: DiscussionUpdateManyWithoutGroupInput
+  spaces: SpaceUpdateManyWithoutGroupsInput
+}
+
+input GroupUpdateManyDataInput {
+  name: String
+  description: String
+}
+
+input GroupUpdateManyInput {
+  create: [GroupCreateInput!]
+  update: [GroupUpdateWithWhereUniqueNestedInput!]
+  upsert: [GroupUpsertWithWhereUniqueNestedInput!]
+  delete: [GroupWhereUniqueInput!]
+  connect: [GroupWhereUniqueInput!]
+  set: [GroupWhereUniqueInput!]
+  disconnect: [GroupWhereUniqueInput!]
+  deleteMany: [GroupScalarWhereInput!]
+  updateMany: [GroupUpdateManyWithWhereNestedInput!]
+}
+
+input GroupUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
+input GroupUpdateManyWithoutAdminInput {
+  create: [GroupCreateWithoutAdminInput!]
+  delete: [GroupWhereUniqueInput!]
+  connect: [GroupWhereUniqueInput!]
+  set: [GroupWhereUniqueInput!]
+  disconnect: [GroupWhereUniqueInput!]
+  update: [GroupUpdateWithWhereUniqueWithoutAdminInput!]
+  upsert: [GroupUpsertWithWhereUniqueWithoutAdminInput!]
+  deleteMany: [GroupScalarWhereInput!]
+  updateMany: [GroupUpdateManyWithWhereNestedInput!]
+}
+
+input GroupUpdateManyWithoutFollowersInput {
+  create: [GroupCreateWithoutFollowersInput!]
+  delete: [GroupWhereUniqueInput!]
+  connect: [GroupWhereUniqueInput!]
+  set: [GroupWhereUniqueInput!]
+  disconnect: [GroupWhereUniqueInput!]
+  update: [GroupUpdateWithWhereUniqueWithoutFollowersInput!]
+  upsert: [GroupUpsertWithWhereUniqueWithoutFollowersInput!]
+  deleteMany: [GroupScalarWhereInput!]
+  updateMany: [GroupUpdateManyWithWhereNestedInput!]
+}
+
+input GroupUpdateManyWithoutSpacesInput {
+  create: [GroupCreateWithoutSpacesInput!]
+  delete: [GroupWhereUniqueInput!]
+  connect: [GroupWhereUniqueInput!]
+  set: [GroupWhereUniqueInput!]
+  disconnect: [GroupWhereUniqueInput!]
+  update: [GroupUpdateWithWhereUniqueWithoutSpacesInput!]
+  upsert: [GroupUpsertWithWhereUniqueWithoutSpacesInput!]
+  deleteMany: [GroupScalarWhereInput!]
+  updateMany: [GroupUpdateManyWithWhereNestedInput!]
+}
+
+input GroupUpdateManyWithWhereNestedInput {
+  where: GroupScalarWhereInput!
+  data: GroupUpdateManyDataInput!
+}
+
+input GroupUpdateOneRequiredWithoutDiscussionsInput {
+  create: GroupCreateWithoutDiscussionsInput
+  update: GroupUpdateWithoutDiscussionsDataInput
+  upsert: GroupUpsertWithoutDiscussionsInput
+  connect: GroupWhereUniqueInput
+}
+
+input GroupUpdateWithoutAdminDataInput {
+  name: String
+  description: String
+  moderators: UserUpdateManyInput
+  followers: UserUpdateManyWithoutGroupsInput
+  discussions: DiscussionUpdateManyWithoutGroupInput
+  spaces: SpaceUpdateManyWithoutGroupsInput
+}
+
+input GroupUpdateWithoutDiscussionsDataInput {
+  name: String
+  description: String
+  admin: UserUpdateOneRequiredWithoutAdminOfGroupInput
+  moderators: UserUpdateManyInput
+  followers: UserUpdateManyWithoutGroupsInput
+  spaces: SpaceUpdateManyWithoutGroupsInput
+}
+
+input GroupUpdateWithoutFollowersDataInput {
+  name: String
+  description: String
+  admin: UserUpdateOneRequiredWithoutAdminOfGroupInput
+  moderators: UserUpdateManyInput
+  discussions: DiscussionUpdateManyWithoutGroupInput
+  spaces: SpaceUpdateManyWithoutGroupsInput
+}
+
+input GroupUpdateWithoutSpacesDataInput {
+  name: String
+  description: String
+  admin: UserUpdateOneRequiredWithoutAdminOfGroupInput
+  moderators: UserUpdateManyInput
+  followers: UserUpdateManyWithoutGroupsInput
+  discussions: DiscussionUpdateManyWithoutGroupInput
+}
+
+input GroupUpdateWithWhereUniqueNestedInput {
+  where: GroupWhereUniqueInput!
+  data: GroupUpdateDataInput!
+}
+
+input GroupUpdateWithWhereUniqueWithoutAdminInput {
+  where: GroupWhereUniqueInput!
+  data: GroupUpdateWithoutAdminDataInput!
+}
+
+input GroupUpdateWithWhereUniqueWithoutFollowersInput {
+  where: GroupWhereUniqueInput!
+  data: GroupUpdateWithoutFollowersDataInput!
+}
+
+input GroupUpdateWithWhereUniqueWithoutSpacesInput {
+  where: GroupWhereUniqueInput!
+  data: GroupUpdateWithoutSpacesDataInput!
+}
+
+input GroupUpsertWithoutDiscussionsInput {
+  update: GroupUpdateWithoutDiscussionsDataInput!
+  create: GroupCreateWithoutDiscussionsInput!
+}
+
+input GroupUpsertWithWhereUniqueNestedInput {
+  where: GroupWhereUniqueInput!
+  update: GroupUpdateDataInput!
+  create: GroupCreateInput!
+}
+
+input GroupUpsertWithWhereUniqueWithoutAdminInput {
+  where: GroupWhereUniqueInput!
+  update: GroupUpdateWithoutAdminDataInput!
+  create: GroupCreateWithoutAdminInput!
+}
+
+input GroupUpsertWithWhereUniqueWithoutFollowersInput {
+  where: GroupWhereUniqueInput!
+  update: GroupUpdateWithoutFollowersDataInput!
+  create: GroupCreateWithoutFollowersInput!
+}
+
+input GroupUpsertWithWhereUniqueWithoutSpacesInput {
+  where: GroupWhereUniqueInput!
+  update: GroupUpdateWithoutSpacesDataInput!
+  create: GroupCreateWithoutSpacesInput!
+}
+
+input GroupWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  admin: UserWhereInput
+  moderators_every: UserWhereInput
+  moderators_some: UserWhereInput
+  moderators_none: UserWhereInput
+  followers_every: UserWhereInput
+  followers_some: UserWhereInput
+  followers_none: UserWhereInput
+  discussions_every: DiscussionWhereInput
+  discussions_some: DiscussionWhereInput
+  discussions_none: DiscussionWhereInput
+  spaces_every: SpaceWhereInput
+  spaces_some: SpaceWhereInput
+  spaces_none: SpaceWhereInput
+  AND: [GroupWhereInput!]
+  OR: [GroupWhereInput!]
+  NOT: [GroupWhereInput!]
+}
+
+input GroupWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+scalar Long
+
+type Mutation {
+  createDiscussion(data: DiscussionCreateInput!): Discussion!
+  updateDiscussion(data: DiscussionUpdateInput!, where: DiscussionWhereUniqueInput!): Discussion
+  updateManyDiscussions(data: DiscussionUpdateManyMutationInput!, where: DiscussionWhereInput): BatchPayload!
+  upsertDiscussion(where: DiscussionWhereUniqueInput!, create: DiscussionCreateInput!, update: DiscussionUpdateInput!): Discussion!
+  deleteDiscussion(where: DiscussionWhereUniqueInput!): Discussion
+  deleteManyDiscussions(where: DiscussionWhereInput): BatchPayload!
+  createGroup(data: GroupCreateInput!): Group!
+  updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
+  updateManyGroups(data: GroupUpdateManyMutationInput!, where: GroupWhereInput): BatchPayload!
+  upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
+  deleteGroup(where: GroupWhereUniqueInput!): Group
+  deleteManyGroups(where: GroupWhereInput): BatchPayload!
+  createReply(data: ReplyCreateInput!): Reply!
+  updateReply(data: ReplyUpdateInput!, where: ReplyWhereUniqueInput!): Reply
+  updateManyReplies(data: ReplyUpdateManyMutationInput!, where: ReplyWhereInput): BatchPayload!
+  upsertReply(where: ReplyWhereUniqueInput!, create: ReplyCreateInput!, update: ReplyUpdateInput!): Reply!
+  deleteReply(where: ReplyWhereUniqueInput!): Reply
+  deleteManyReplies(where: ReplyWhereInput): BatchPayload!
+  createSpace(data: SpaceCreateInput!): Space!
+  updateSpace(data: SpaceUpdateInput!, where: SpaceWhereUniqueInput!): Space
+  updateManySpaces(data: SpaceUpdateManyMutationInput!, where: SpaceWhereInput): BatchPayload!
+  upsertSpace(where: SpaceWhereUniqueInput!, create: SpaceCreateInput!, update: SpaceUpdateInput!): Space!
+  deleteSpace(where: SpaceWhereUniqueInput!): Space
+  deleteManySpaces(where: SpaceWhereInput): BatchPayload!
+  createTag(data: TagCreateInput!): Tag!
+  updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
+  updateManyTags(data: TagUpdateManyMutationInput!, where: TagWhereInput): BatchPayload!
+  upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
+  deleteTag(where: TagWhereUniqueInput!): Tag
+  deleteManyTags(where: TagWhereInput): BatchPayload!
+  createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  discussion(where: DiscussionWhereUniqueInput!): Discussion
+  discussions(where: DiscussionWhereInput, orderBy: DiscussionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Discussion]!
+  discussionsConnection(where: DiscussionWhereInput, orderBy: DiscussionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DiscussionConnection!
+  group(where: GroupWhereUniqueInput!): Group
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
+  groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
+  reply(where: ReplyWhereUniqueInput!): Reply
+  replies(where: ReplyWhereInput, orderBy: ReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Reply]!
+  repliesConnection(where: ReplyWhereInput, orderBy: ReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ReplyConnection!
+  space(where: SpaceWhereUniqueInput!): Space
+  spaces(where: SpaceWhereInput, orderBy: SpaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Space]!
+  spacesConnection(where: SpaceWhereInput, orderBy: SpaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SpaceConnection!
+  tag(where: TagWhereUniqueInput!): Tag
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
+  tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
+  user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  node(id: ID!): Node
+}
+
+type Reply {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  author: User!
+  discussion: Discussion!
+  parent: Reply
+  children(where: ReplyWhereInput, orderBy: ReplyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Reply!]
+  body: String!
+  likedBy(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+}
+
+type ReplyConnection {
+  pageInfo: PageInfo!
+  edges: [ReplyEdge]!
+  aggregate: AggregateReply!
+}
+
+input ReplyCreateInput {
+  author: UserCreateOneInput!
+  discussion: DiscussionCreateOneWithoutRepliesInput!
+  parent: ReplyCreateOneWithoutParentInput
+  children: ReplyCreateManyWithoutChildrenInput
+  body: String!
+  likedBy: UserCreateManyInput
+}
+
+input ReplyCreateManyWithoutChildrenInput {
+  create: [ReplyCreateWithoutChildrenInput!]
+  connect: [ReplyWhereUniqueInput!]
+}
+
+input ReplyCreateManyWithoutDiscussionInput {
+  create: [ReplyCreateWithoutDiscussionInput!]
+  connect: [ReplyWhereUniqueInput!]
+}
+
+input ReplyCreateOneWithoutParentInput {
+  create: ReplyCreateWithoutParentInput
+  connect: ReplyWhereUniqueInput
+}
+
+input ReplyCreateWithoutChildrenInput {
+  author: UserCreateOneInput!
+  discussion: DiscussionCreateOneWithoutRepliesInput!
+  parent: ReplyCreateOneWithoutParentInput
+  body: String!
+  likedBy: UserCreateManyInput
+}
+
+input ReplyCreateWithoutDiscussionInput {
+  author: UserCreateOneInput!
+  parent: ReplyCreateOneWithoutParentInput
+  children: ReplyCreateManyWithoutChildrenInput
+  body: String!
+  likedBy: UserCreateManyInput
+}
+
+input ReplyCreateWithoutParentInput {
+  author: UserCreateOneInput!
+  discussion: DiscussionCreateOneWithoutRepliesInput!
+  children: ReplyCreateManyWithoutChildrenInput
+  body: String!
+  likedBy: UserCreateManyInput
+}
+
+type ReplyEdge {
+  node: Reply!
+  cursor: String!
+}
+
+enum ReplyOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  body_ASC
+  body_DESC
+}
+
+type ReplyPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  body: String!
+}
+
+input ReplyScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  body: String
+  body_not: String
+  body_in: [String!]
+  body_not_in: [String!]
+  body_lt: String
+  body_lte: String
+  body_gt: String
+  body_gte: String
+  body_contains: String
+  body_not_contains: String
+  body_starts_with: String
+  body_not_starts_with: String
+  body_ends_with: String
+  body_not_ends_with: String
+  AND: [ReplyScalarWhereInput!]
+  OR: [ReplyScalarWhereInput!]
+  NOT: [ReplyScalarWhereInput!]
+}
+
+type ReplySubscriptionPayload {
+  mutation: MutationType!
+  node: Reply
+  updatedFields: [String!]
+  previousValues: ReplyPreviousValues
+}
+
+input ReplySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ReplyWhereInput
+  AND: [ReplySubscriptionWhereInput!]
+  OR: [ReplySubscriptionWhereInput!]
+  NOT: [ReplySubscriptionWhereInput!]
+}
+
+input ReplyUpdateInput {
+  author: UserUpdateOneRequiredInput
+  discussion: DiscussionUpdateOneRequiredWithoutRepliesInput
+  parent: ReplyUpdateOneWithoutParentInput
+  children: ReplyUpdateManyWithoutChildrenInput
+  body: String
+  likedBy: UserUpdateManyInput
+}
+
+input ReplyUpdateManyDataInput {
+  body: String
+}
+
+input ReplyUpdateManyMutationInput {
+  body: String
+}
+
+input ReplyUpdateManyWithoutChildrenInput {
+  create: [ReplyCreateWithoutChildrenInput!]
+  delete: [ReplyWhereUniqueInput!]
+  connect: [ReplyWhereUniqueInput!]
+  set: [ReplyWhereUniqueInput!]
+  disconnect: [ReplyWhereUniqueInput!]
+  update: [ReplyUpdateWithWhereUniqueWithoutChildrenInput!]
+  upsert: [ReplyUpsertWithWhereUniqueWithoutChildrenInput!]
+  deleteMany: [ReplyScalarWhereInput!]
+  updateMany: [ReplyUpdateManyWithWhereNestedInput!]
+}
+
+input ReplyUpdateManyWithoutDiscussionInput {
+  create: [ReplyCreateWithoutDiscussionInput!]
+  delete: [ReplyWhereUniqueInput!]
+  connect: [ReplyWhereUniqueInput!]
+  set: [ReplyWhereUniqueInput!]
+  disconnect: [ReplyWhereUniqueInput!]
+  update: [ReplyUpdateWithWhereUniqueWithoutDiscussionInput!]
+  upsert: [ReplyUpsertWithWhereUniqueWithoutDiscussionInput!]
+  deleteMany: [ReplyScalarWhereInput!]
+  updateMany: [ReplyUpdateManyWithWhereNestedInput!]
+}
+
+input ReplyUpdateManyWithWhereNestedInput {
+  where: ReplyScalarWhereInput!
+  data: ReplyUpdateManyDataInput!
+}
+
+input ReplyUpdateOneWithoutParentInput {
+  create: ReplyCreateWithoutParentInput
+  update: ReplyUpdateWithoutParentDataInput
+  upsert: ReplyUpsertWithoutParentInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ReplyWhereUniqueInput
+}
+
+input ReplyUpdateWithoutChildrenDataInput {
+  author: UserUpdateOneRequiredInput
+  discussion: DiscussionUpdateOneRequiredWithoutRepliesInput
+  parent: ReplyUpdateOneWithoutParentInput
+  body: String
+  likedBy: UserUpdateManyInput
+}
+
+input ReplyUpdateWithoutDiscussionDataInput {
+  author: UserUpdateOneRequiredInput
+  parent: ReplyUpdateOneWithoutParentInput
+  children: ReplyUpdateManyWithoutChildrenInput
+  body: String
+  likedBy: UserUpdateManyInput
+}
+
+input ReplyUpdateWithoutParentDataInput {
+  author: UserUpdateOneRequiredInput
+  discussion: DiscussionUpdateOneRequiredWithoutRepliesInput
+  children: ReplyUpdateManyWithoutChildrenInput
+  body: String
+  likedBy: UserUpdateManyInput
+}
+
+input ReplyUpdateWithWhereUniqueWithoutChildrenInput {
+  where: ReplyWhereUniqueInput!
+  data: ReplyUpdateWithoutChildrenDataInput!
+}
+
+input ReplyUpdateWithWhereUniqueWithoutDiscussionInput {
+  where: ReplyWhereUniqueInput!
+  data: ReplyUpdateWithoutDiscussionDataInput!
+}
+
+input ReplyUpsertWithoutParentInput {
+  update: ReplyUpdateWithoutParentDataInput!
+  create: ReplyCreateWithoutParentInput!
+}
+
+input ReplyUpsertWithWhereUniqueWithoutChildrenInput {
+  where: ReplyWhereUniqueInput!
+  update: ReplyUpdateWithoutChildrenDataInput!
+  create: ReplyCreateWithoutChildrenInput!
+}
+
+input ReplyUpsertWithWhereUniqueWithoutDiscussionInput {
+  where: ReplyWhereUniqueInput!
+  update: ReplyUpdateWithoutDiscussionDataInput!
+  create: ReplyCreateWithoutDiscussionInput!
+}
+
+input ReplyWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  author: UserWhereInput
+  discussion: DiscussionWhereInput
+  parent: ReplyWhereInput
+  children_every: ReplyWhereInput
+  children_some: ReplyWhereInput
+  children_none: ReplyWhereInput
+  body: String
+  body_not: String
+  body_in: [String!]
+  body_not_in: [String!]
+  body_lt: String
+  body_lte: String
+  body_gt: String
+  body_gte: String
+  body_contains: String
+  body_not_contains: String
+  body_starts_with: String
+  body_not_starts_with: String
+  body_ends_with: String
+  body_not_ends_with: String
+  likedBy_every: UserWhereInput
+  likedBy_some: UserWhereInput
+  likedBy_none: UserWhereInput
+  AND: [ReplyWhereInput!]
+  OR: [ReplyWhereInput!]
+  NOT: [ReplyWhereInput!]
+}
+
+input ReplyWhereUniqueInput {
+  id: ID
+}
+
+type Space {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  admin: User!
+  name: String!
+  description: String!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
+  followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+}
+
+type SpaceConnection {
+  pageInfo: PageInfo!
+  edges: [SpaceEdge]!
+  aggregate: AggregateSpace!
+}
+
+input SpaceCreateInput {
+  admin: UserCreateOneInput!
+  name: String!
+  description: String!
+  tags: TagCreateManyWithoutSpacesInput
+  groups: GroupCreateManyWithoutSpacesInput
+  followers: UserCreateManyWithoutSpacesInput
+}
+
+input SpaceCreateManyInput {
+  create: [SpaceCreateInput!]
+  connect: [SpaceWhereUniqueInput!]
+}
+
+input SpaceCreateManyWithoutFollowersInput {
+  create: [SpaceCreateWithoutFollowersInput!]
+  connect: [SpaceWhereUniqueInput!]
+}
+
+input SpaceCreateManyWithoutGroupsInput {
+  create: [SpaceCreateWithoutGroupsInput!]
+  connect: [SpaceWhereUniqueInput!]
+}
+
+input SpaceCreateManyWithoutTagsInput {
+  create: [SpaceCreateWithoutTagsInput!]
+  connect: [SpaceWhereUniqueInput!]
+}
+
+input SpaceCreateWithoutFollowersInput {
+  admin: UserCreateOneInput!
+  name: String!
+  description: String!
+  tags: TagCreateManyWithoutSpacesInput
+  groups: GroupCreateManyWithoutSpacesInput
+}
+
+input SpaceCreateWithoutGroupsInput {
+  admin: UserCreateOneInput!
+  name: String!
+  description: String!
+  tags: TagCreateManyWithoutSpacesInput
+  followers: UserCreateManyWithoutSpacesInput
+}
+
+input SpaceCreateWithoutTagsInput {
+  admin: UserCreateOneInput!
+  name: String!
+  description: String!
+  groups: GroupCreateManyWithoutSpacesInput
+  followers: UserCreateManyWithoutSpacesInput
+}
+
+type SpaceEdge {
+  node: Space!
+  cursor: String!
+}
+
+enum SpaceOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+}
+
+type SpacePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String!
+}
+
+input SpaceScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [SpaceScalarWhereInput!]
+  OR: [SpaceScalarWhereInput!]
+  NOT: [SpaceScalarWhereInput!]
+}
+
+type SpaceSubscriptionPayload {
+  mutation: MutationType!
+  node: Space
+  updatedFields: [String!]
+  previousValues: SpacePreviousValues
+}
+
+input SpaceSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SpaceWhereInput
+  AND: [SpaceSubscriptionWhereInput!]
+  OR: [SpaceSubscriptionWhereInput!]
+  NOT: [SpaceSubscriptionWhereInput!]
+}
+
+input SpaceUpdateDataInput {
+  admin: UserUpdateOneRequiredInput
+  name: String
+  description: String
+  tags: TagUpdateManyWithoutSpacesInput
+  groups: GroupUpdateManyWithoutSpacesInput
+  followers: UserUpdateManyWithoutSpacesInput
+}
+
+input SpaceUpdateInput {
+  admin: UserUpdateOneRequiredInput
+  name: String
+  description: String
+  tags: TagUpdateManyWithoutSpacesInput
+  groups: GroupUpdateManyWithoutSpacesInput
+  followers: UserUpdateManyWithoutSpacesInput
+}
+
+input SpaceUpdateManyDataInput {
+  name: String
+  description: String
+}
+
+input SpaceUpdateManyInput {
+  create: [SpaceCreateInput!]
+  update: [SpaceUpdateWithWhereUniqueNestedInput!]
+  upsert: [SpaceUpsertWithWhereUniqueNestedInput!]
+  delete: [SpaceWhereUniqueInput!]
+  connect: [SpaceWhereUniqueInput!]
+  set: [SpaceWhereUniqueInput!]
+  disconnect: [SpaceWhereUniqueInput!]
+  deleteMany: [SpaceScalarWhereInput!]
+  updateMany: [SpaceUpdateManyWithWhereNestedInput!]
+}
+
+input SpaceUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
+input SpaceUpdateManyWithoutFollowersInput {
+  create: [SpaceCreateWithoutFollowersInput!]
+  delete: [SpaceWhereUniqueInput!]
+  connect: [SpaceWhereUniqueInput!]
+  set: [SpaceWhereUniqueInput!]
+  disconnect: [SpaceWhereUniqueInput!]
+  update: [SpaceUpdateWithWhereUniqueWithoutFollowersInput!]
+  upsert: [SpaceUpsertWithWhereUniqueWithoutFollowersInput!]
+  deleteMany: [SpaceScalarWhereInput!]
+  updateMany: [SpaceUpdateManyWithWhereNestedInput!]
+}
+
+input SpaceUpdateManyWithoutGroupsInput {
+  create: [SpaceCreateWithoutGroupsInput!]
+  delete: [SpaceWhereUniqueInput!]
+  connect: [SpaceWhereUniqueInput!]
+  set: [SpaceWhereUniqueInput!]
+  disconnect: [SpaceWhereUniqueInput!]
+  update: [SpaceUpdateWithWhereUniqueWithoutGroupsInput!]
+  upsert: [SpaceUpsertWithWhereUniqueWithoutGroupsInput!]
+  deleteMany: [SpaceScalarWhereInput!]
+  updateMany: [SpaceUpdateManyWithWhereNestedInput!]
+}
+
+input SpaceUpdateManyWithoutTagsInput {
+  create: [SpaceCreateWithoutTagsInput!]
+  delete: [SpaceWhereUniqueInput!]
+  connect: [SpaceWhereUniqueInput!]
+  set: [SpaceWhereUniqueInput!]
+  disconnect: [SpaceWhereUniqueInput!]
+  update: [SpaceUpdateWithWhereUniqueWithoutTagsInput!]
+  upsert: [SpaceUpsertWithWhereUniqueWithoutTagsInput!]
+  deleteMany: [SpaceScalarWhereInput!]
+  updateMany: [SpaceUpdateManyWithWhereNestedInput!]
+}
+
+input SpaceUpdateManyWithWhereNestedInput {
+  where: SpaceScalarWhereInput!
+  data: SpaceUpdateManyDataInput!
+}
+
+input SpaceUpdateWithoutFollowersDataInput {
+  admin: UserUpdateOneRequiredInput
+  name: String
+  description: String
+  tags: TagUpdateManyWithoutSpacesInput
+  groups: GroupUpdateManyWithoutSpacesInput
+}
+
+input SpaceUpdateWithoutGroupsDataInput {
+  admin: UserUpdateOneRequiredInput
+  name: String
+  description: String
+  tags: TagUpdateManyWithoutSpacesInput
+  followers: UserUpdateManyWithoutSpacesInput
+}
+
+input SpaceUpdateWithoutTagsDataInput {
+  admin: UserUpdateOneRequiredInput
+  name: String
+  description: String
+  groups: GroupUpdateManyWithoutSpacesInput
+  followers: UserUpdateManyWithoutSpacesInput
+}
+
+input SpaceUpdateWithWhereUniqueNestedInput {
+  where: SpaceWhereUniqueInput!
+  data: SpaceUpdateDataInput!
+}
+
+input SpaceUpdateWithWhereUniqueWithoutFollowersInput {
+  where: SpaceWhereUniqueInput!
+  data: SpaceUpdateWithoutFollowersDataInput!
+}
+
+input SpaceUpdateWithWhereUniqueWithoutGroupsInput {
+  where: SpaceWhereUniqueInput!
+  data: SpaceUpdateWithoutGroupsDataInput!
+}
+
+input SpaceUpdateWithWhereUniqueWithoutTagsInput {
+  where: SpaceWhereUniqueInput!
+  data: SpaceUpdateWithoutTagsDataInput!
+}
+
+input SpaceUpsertWithWhereUniqueNestedInput {
+  where: SpaceWhereUniqueInput!
+  update: SpaceUpdateDataInput!
+  create: SpaceCreateInput!
+}
+
+input SpaceUpsertWithWhereUniqueWithoutFollowersInput {
+  where: SpaceWhereUniqueInput!
+  update: SpaceUpdateWithoutFollowersDataInput!
+  create: SpaceCreateWithoutFollowersInput!
+}
+
+input SpaceUpsertWithWhereUniqueWithoutGroupsInput {
+  where: SpaceWhereUniqueInput!
+  update: SpaceUpdateWithoutGroupsDataInput!
+  create: SpaceCreateWithoutGroupsInput!
+}
+
+input SpaceUpsertWithWhereUniqueWithoutTagsInput {
+  where: SpaceWhereUniqueInput!
+  update: SpaceUpdateWithoutTagsDataInput!
+  create: SpaceCreateWithoutTagsInput!
+}
+
+input SpaceWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  admin: UserWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
+  groups_every: GroupWhereInput
+  groups_some: GroupWhereInput
+  groups_none: GroupWhereInput
+  followers_every: UserWhereInput
+  followers_some: UserWhereInput
+  followers_none: UserWhereInput
+  AND: [SpaceWhereInput!]
+  OR: [SpaceWhereInput!]
+  NOT: [SpaceWhereInput!]
+}
+
+input SpaceWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+type Subscription {
+  discussion(where: DiscussionSubscriptionWhereInput): DiscussionSubscriptionPayload
+  group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
+  reply(where: ReplySubscriptionWhereInput): ReplySubscriptionPayload
+  space(where: SpaceSubscriptionWhereInput): SpaceSubscriptionPayload
+  tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type Tag {
+  id: ID!
+  createdAt: DateTime!
+  name: String!
+  spaces(where: SpaceWhereInput, orderBy: SpaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Space!]
+  discussions(where: DiscussionWhereInput, orderBy: DiscussionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Discussion!]
+}
+
+type TagConnection {
+  pageInfo: PageInfo!
+  edges: [TagEdge]!
+  aggregate: AggregateTag!
+}
+
+input TagCreateInput {
+  name: String!
+  spaces: SpaceCreateManyWithoutTagsInput
+  discussions: DiscussionCreateManyWithoutTagsInput
+}
+
+input TagCreateManyWithoutDiscussionsInput {
+  create: [TagCreateWithoutDiscussionsInput!]
+  connect: [TagWhereUniqueInput!]
+}
+
+input TagCreateManyWithoutSpacesInput {
+  create: [TagCreateWithoutSpacesInput!]
+  connect: [TagWhereUniqueInput!]
+}
+
+input TagCreateWithoutDiscussionsInput {
+  name: String!
+  spaces: SpaceCreateManyWithoutTagsInput
+}
+
+input TagCreateWithoutSpacesInput {
+  name: String!
+  discussions: DiscussionCreateManyWithoutTagsInput
+}
+
+type TagEdge {
+  node: Tag!
+  cursor: String!
+}
+
+enum TagOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type TagPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  name: String!
+}
+
+input TagScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [TagScalarWhereInput!]
+  OR: [TagScalarWhereInput!]
+  NOT: [TagScalarWhereInput!]
+}
+
+type TagSubscriptionPayload {
+  mutation: MutationType!
+  node: Tag
+  updatedFields: [String!]
+  previousValues: TagPreviousValues
+}
+
+input TagSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TagWhereInput
+  AND: [TagSubscriptionWhereInput!]
+  OR: [TagSubscriptionWhereInput!]
+  NOT: [TagSubscriptionWhereInput!]
+}
+
+input TagUpdateInput {
+  name: String
+  spaces: SpaceUpdateManyWithoutTagsInput
+  discussions: DiscussionUpdateManyWithoutTagsInput
+}
+
+input TagUpdateManyDataInput {
+  name: String
+}
+
+input TagUpdateManyMutationInput {
+  name: String
+}
+
+input TagUpdateManyWithoutDiscussionsInput {
+  create: [TagCreateWithoutDiscussionsInput!]
+  delete: [TagWhereUniqueInput!]
+  connect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
+  disconnect: [TagWhereUniqueInput!]
+  update: [TagUpdateWithWhereUniqueWithoutDiscussionsInput!]
+  upsert: [TagUpsertWithWhereUniqueWithoutDiscussionsInput!]
+  deleteMany: [TagScalarWhereInput!]
+  updateMany: [TagUpdateManyWithWhereNestedInput!]
+}
+
+input TagUpdateManyWithoutSpacesInput {
+  create: [TagCreateWithoutSpacesInput!]
+  delete: [TagWhereUniqueInput!]
+  connect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
+  disconnect: [TagWhereUniqueInput!]
+  update: [TagUpdateWithWhereUniqueWithoutSpacesInput!]
+  upsert: [TagUpsertWithWhereUniqueWithoutSpacesInput!]
+  deleteMany: [TagScalarWhereInput!]
+  updateMany: [TagUpdateManyWithWhereNestedInput!]
+}
+
+input TagUpdateManyWithWhereNestedInput {
+  where: TagScalarWhereInput!
+  data: TagUpdateManyDataInput!
+}
+
+input TagUpdateWithoutDiscussionsDataInput {
+  name: String
+  spaces: SpaceUpdateManyWithoutTagsInput
+}
+
+input TagUpdateWithoutSpacesDataInput {
+  name: String
+  discussions: DiscussionUpdateManyWithoutTagsInput
+}
+
+input TagUpdateWithWhereUniqueWithoutDiscussionsInput {
+  where: TagWhereUniqueInput!
+  data: TagUpdateWithoutDiscussionsDataInput!
+}
+
+input TagUpdateWithWhereUniqueWithoutSpacesInput {
+  where: TagWhereUniqueInput!
+  data: TagUpdateWithoutSpacesDataInput!
+}
+
+input TagUpsertWithWhereUniqueWithoutDiscussionsInput {
+  where: TagWhereUniqueInput!
+  update: TagUpdateWithoutDiscussionsDataInput!
+  create: TagCreateWithoutDiscussionsInput!
+}
+
+input TagUpsertWithWhereUniqueWithoutSpacesInput {
+  where: TagWhereUniqueInput!
+  update: TagUpdateWithoutSpacesDataInput!
+  create: TagCreateWithoutSpacesInput!
+}
+
+input TagWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  spaces_every: SpaceWhereInput
+  spaces_some: SpaceWhereInput
+  spaces_none: SpaceWhereInput
+  discussions_every: DiscussionWhereInput
+  discussions_some: DiscussionWhereInput
+  discussions_none: DiscussionWhereInput
+  AND: [TagWhereInput!]
+  OR: [TagWhereInput!]
+  NOT: [TagWhereInput!]
+}
+
+input TagWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+type User {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  discussions(where: DiscussionWhereInput, orderBy: DiscussionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Discussion!]
+  spaces(where: SpaceWhereInput, orderBy: SpaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Space!]
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
+  following(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  likedDiscussions(where: DiscussionWhereInput, orderBy: DiscussionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Discussion!]
+  sharedDiscussions(where: DiscussionWhereInput, orderBy: DiscussionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Discussion!]
+  savedDiscussions(where: DiscussionWhereInput, orderBy: DiscussionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Discussion!]
+  savedGroups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
+  savedSpaces(where: SpaceWhereInput, orderBy: SpaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Space!]
+  adminOfGroup(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
+  adminOfSpace(where: SpaceWhereInput, orderBy: SpaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Space!]
+}
+
+type UserConnection {
+  pageInfo: PageInfo!
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  name: String!
+  discussions: DiscussionCreateManyWithoutAuthorInput
+  spaces: SpaceCreateManyWithoutFollowersInput
+  groups: GroupCreateManyWithoutFollowersInput
+  following: UserCreateManyWithoutFollowersInput
+  followers: UserCreateManyWithoutFollowingInput
+  likedDiscussions: DiscussionCreateManyInput
+  sharedDiscussions: DiscussionCreateManyInput
+  savedDiscussions: DiscussionCreateManyInput
+  savedGroups: GroupCreateManyInput
+  savedSpaces: SpaceCreateManyInput
+  adminOfGroup: GroupCreateManyWithoutAdminInput
+  adminOfSpace: SpaceCreateManyInput
+}
+
+input UserCreateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutFollowersInput {
+  create: [UserCreateWithoutFollowersInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutFollowingInput {
+  create: [UserCreateWithoutFollowingInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutGroupsInput {
+  create: [UserCreateWithoutGroupsInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutSpacesInput {
+  create: [UserCreateWithoutSpacesInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutAdminOfGroupInput {
+  create: UserCreateWithoutAdminOfGroupInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutDiscussionsInput {
+  create: UserCreateWithoutDiscussionsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutAdminOfGroupInput {
+  name: String!
+  discussions: DiscussionCreateManyWithoutAuthorInput
+  spaces: SpaceCreateManyWithoutFollowersInput
+  groups: GroupCreateManyWithoutFollowersInput
+  following: UserCreateManyWithoutFollowersInput
+  followers: UserCreateManyWithoutFollowingInput
+  likedDiscussions: DiscussionCreateManyInput
+  sharedDiscussions: DiscussionCreateManyInput
+  savedDiscussions: DiscussionCreateManyInput
+  savedGroups: GroupCreateManyInput
+  savedSpaces: SpaceCreateManyInput
+  adminOfSpace: SpaceCreateManyInput
+}
+
+input UserCreateWithoutDiscussionsInput {
+  name: String!
+  spaces: SpaceCreateManyWithoutFollowersInput
+  groups: GroupCreateManyWithoutFollowersInput
+  following: UserCreateManyWithoutFollowersInput
+  followers: UserCreateManyWithoutFollowingInput
+  likedDiscussions: DiscussionCreateManyInput
+  sharedDiscussions: DiscussionCreateManyInput
+  savedDiscussions: DiscussionCreateManyInput
+  savedGroups: GroupCreateManyInput
+  savedSpaces: SpaceCreateManyInput
+  adminOfGroup: GroupCreateManyWithoutAdminInput
+  adminOfSpace: SpaceCreateManyInput
+}
+
+input UserCreateWithoutFollowersInput {
+  name: String!
+  discussions: DiscussionCreateManyWithoutAuthorInput
+  spaces: SpaceCreateManyWithoutFollowersInput
+  groups: GroupCreateManyWithoutFollowersInput
+  following: UserCreateManyWithoutFollowersInput
+  likedDiscussions: DiscussionCreateManyInput
+  sharedDiscussions: DiscussionCreateManyInput
+  savedDiscussions: DiscussionCreateManyInput
+  savedGroups: GroupCreateManyInput
+  savedSpaces: SpaceCreateManyInput
+  adminOfGroup: GroupCreateManyWithoutAdminInput
+  adminOfSpace: SpaceCreateManyInput
+}
+
+input UserCreateWithoutFollowingInput {
+  name: String!
+  discussions: DiscussionCreateManyWithoutAuthorInput
+  spaces: SpaceCreateManyWithoutFollowersInput
+  groups: GroupCreateManyWithoutFollowersInput
+  followers: UserCreateManyWithoutFollowingInput
+  likedDiscussions: DiscussionCreateManyInput
+  sharedDiscussions: DiscussionCreateManyInput
+  savedDiscussions: DiscussionCreateManyInput
+  savedGroups: GroupCreateManyInput
+  savedSpaces: SpaceCreateManyInput
+  adminOfGroup: GroupCreateManyWithoutAdminInput
+  adminOfSpace: SpaceCreateManyInput
+}
+
+input UserCreateWithoutGroupsInput {
+  name: String!
+  discussions: DiscussionCreateManyWithoutAuthorInput
+  spaces: SpaceCreateManyWithoutFollowersInput
+  following: UserCreateManyWithoutFollowersInput
+  followers: UserCreateManyWithoutFollowingInput
+  likedDiscussions: DiscussionCreateManyInput
+  sharedDiscussions: DiscussionCreateManyInput
+  savedDiscussions: DiscussionCreateManyInput
+  savedGroups: GroupCreateManyInput
+  savedSpaces: SpaceCreateManyInput
+  adminOfGroup: GroupCreateManyWithoutAdminInput
+  adminOfSpace: SpaceCreateManyInput
+}
+
+input UserCreateWithoutSpacesInput {
+  name: String!
+  discussions: DiscussionCreateManyWithoutAuthorInput
+  groups: GroupCreateManyWithoutFollowersInput
+  following: UserCreateManyWithoutFollowersInput
+  followers: UserCreateManyWithoutFollowingInput
+  likedDiscussions: DiscussionCreateManyInput
+  sharedDiscussions: DiscussionCreateManyInput
+  savedDiscussions: DiscussionCreateManyInput
+  savedGroups: GroupCreateManyInput
+  savedSpaces: SpaceCreateManyInput
+  adminOfGroup: GroupCreateManyWithoutAdminInput
+  adminOfSpace: SpaceCreateManyInput
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+}
+
+input UserScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [UserScalarWhereInput!]
+  OR: [UserScalarWhereInput!]
+  NOT: [UserScalarWhereInput!]
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+  AND: [UserSubscriptionWhereInput!]
+  OR: [UserSubscriptionWhereInput!]
+  NOT: [UserSubscriptionWhereInput!]
+}
+
+input UserUpdateDataInput {
+  name: String
+  discussions: DiscussionUpdateManyWithoutAuthorInput
+  spaces: SpaceUpdateManyWithoutFollowersInput
+  groups: GroupUpdateManyWithoutFollowersInput
+  following: UserUpdateManyWithoutFollowersInput
+  followers: UserUpdateManyWithoutFollowingInput
+  likedDiscussions: DiscussionUpdateManyInput
+  sharedDiscussions: DiscussionUpdateManyInput
+  savedDiscussions: DiscussionUpdateManyInput
+  savedGroups: GroupUpdateManyInput
+  savedSpaces: SpaceUpdateManyInput
+  adminOfGroup: GroupUpdateManyWithoutAdminInput
+  adminOfSpace: SpaceUpdateManyInput
+}
+
+input UserUpdateInput {
+  name: String
+  discussions: DiscussionUpdateManyWithoutAuthorInput
+  spaces: SpaceUpdateManyWithoutFollowersInput
+  groups: GroupUpdateManyWithoutFollowersInput
+  following: UserUpdateManyWithoutFollowersInput
+  followers: UserUpdateManyWithoutFollowingInput
+  likedDiscussions: DiscussionUpdateManyInput
+  sharedDiscussions: DiscussionUpdateManyInput
+  savedDiscussions: DiscussionUpdateManyInput
+  savedGroups: GroupUpdateManyInput
+  savedSpaces: SpaceUpdateManyInput
+  adminOfGroup: GroupUpdateManyWithoutAdminInput
+  adminOfSpace: SpaceUpdateManyInput
+}
+
+input UserUpdateManyDataInput {
+  name: String
+}
+
+input UserUpdateManyInput {
+  create: [UserCreateInput!]
+  update: [UserUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserUpsertWithWhereUniqueNestedInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyMutationInput {
+  name: String
+}
+
+input UserUpdateManyWithoutFollowersInput {
+  create: [UserCreateWithoutFollowersInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutFollowersInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutFollowersInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithoutFollowingInput {
+  create: [UserCreateWithoutFollowingInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutFollowingInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutFollowingInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithoutGroupsInput {
+  create: [UserCreateWithoutGroupsInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutGroupsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutGroupsInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithoutSpacesInput {
+  create: [UserCreateWithoutSpacesInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutSpacesInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutSpacesInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutAdminOfGroupInput {
+  create: UserCreateWithoutAdminOfGroupInput
+  update: UserUpdateWithoutAdminOfGroupDataInput
+  upsert: UserUpsertWithoutAdminOfGroupInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutDiscussionsInput {
+  create: UserCreateWithoutDiscussionsInput
+  update: UserUpdateWithoutDiscussionsDataInput
+  upsert: UserUpsertWithoutDiscussionsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutAdminOfGroupDataInput {
+  name: String
+  discussions: DiscussionUpdateManyWithoutAuthorInput
+  spaces: SpaceUpdateManyWithoutFollowersInput
+  groups: GroupUpdateManyWithoutFollowersInput
+  following: UserUpdateManyWithoutFollowersInput
+  followers: UserUpdateManyWithoutFollowingInput
+  likedDiscussions: DiscussionUpdateManyInput
+  sharedDiscussions: DiscussionUpdateManyInput
+  savedDiscussions: DiscussionUpdateManyInput
+  savedGroups: GroupUpdateManyInput
+  savedSpaces: SpaceUpdateManyInput
+  adminOfSpace: SpaceUpdateManyInput
+}
+
+input UserUpdateWithoutDiscussionsDataInput {
+  name: String
+  spaces: SpaceUpdateManyWithoutFollowersInput
+  groups: GroupUpdateManyWithoutFollowersInput
+  following: UserUpdateManyWithoutFollowersInput
+  followers: UserUpdateManyWithoutFollowingInput
+  likedDiscussions: DiscussionUpdateManyInput
+  sharedDiscussions: DiscussionUpdateManyInput
+  savedDiscussions: DiscussionUpdateManyInput
+  savedGroups: GroupUpdateManyInput
+  savedSpaces: SpaceUpdateManyInput
+  adminOfGroup: GroupUpdateManyWithoutAdminInput
+  adminOfSpace: SpaceUpdateManyInput
+}
+
+input UserUpdateWithoutFollowersDataInput {
+  name: String
+  discussions: DiscussionUpdateManyWithoutAuthorInput
+  spaces: SpaceUpdateManyWithoutFollowersInput
+  groups: GroupUpdateManyWithoutFollowersInput
+  following: UserUpdateManyWithoutFollowersInput
+  likedDiscussions: DiscussionUpdateManyInput
+  sharedDiscussions: DiscussionUpdateManyInput
+  savedDiscussions: DiscussionUpdateManyInput
+  savedGroups: GroupUpdateManyInput
+  savedSpaces: SpaceUpdateManyInput
+  adminOfGroup: GroupUpdateManyWithoutAdminInput
+  adminOfSpace: SpaceUpdateManyInput
+}
+
+input UserUpdateWithoutFollowingDataInput {
+  name: String
+  discussions: DiscussionUpdateManyWithoutAuthorInput
+  spaces: SpaceUpdateManyWithoutFollowersInput
+  groups: GroupUpdateManyWithoutFollowersInput
+  followers: UserUpdateManyWithoutFollowingInput
+  likedDiscussions: DiscussionUpdateManyInput
+  sharedDiscussions: DiscussionUpdateManyInput
+  savedDiscussions: DiscussionUpdateManyInput
+  savedGroups: GroupUpdateManyInput
+  savedSpaces: SpaceUpdateManyInput
+  adminOfGroup: GroupUpdateManyWithoutAdminInput
+  adminOfSpace: SpaceUpdateManyInput
+}
+
+input UserUpdateWithoutGroupsDataInput {
+  name: String
+  discussions: DiscussionUpdateManyWithoutAuthorInput
+  spaces: SpaceUpdateManyWithoutFollowersInput
+  following: UserUpdateManyWithoutFollowersInput
+  followers: UserUpdateManyWithoutFollowingInput
+  likedDiscussions: DiscussionUpdateManyInput
+  sharedDiscussions: DiscussionUpdateManyInput
+  savedDiscussions: DiscussionUpdateManyInput
+  savedGroups: GroupUpdateManyInput
+  savedSpaces: SpaceUpdateManyInput
+  adminOfGroup: GroupUpdateManyWithoutAdminInput
+  adminOfSpace: SpaceUpdateManyInput
+}
+
+input UserUpdateWithoutSpacesDataInput {
+  name: String
+  discussions: DiscussionUpdateManyWithoutAuthorInput
+  groups: GroupUpdateManyWithoutFollowersInput
+  following: UserUpdateManyWithoutFollowersInput
+  followers: UserUpdateManyWithoutFollowingInput
+  likedDiscussions: DiscussionUpdateManyInput
+  sharedDiscussions: DiscussionUpdateManyInput
+  savedDiscussions: DiscussionUpdateManyInput
+  savedGroups: GroupUpdateManyInput
+  savedSpaces: SpaceUpdateManyInput
+  adminOfGroup: GroupUpdateManyWithoutAdminInput
+  adminOfSpace: SpaceUpdateManyInput
+}
+
+input UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutFollowersInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutFollowersDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutFollowingInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutFollowingDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutGroupsInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutGroupsDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutSpacesInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutSpacesDataInput!
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithoutAdminOfGroupInput {
+  update: UserUpdateWithoutAdminOfGroupDataInput!
+  create: UserCreateWithoutAdminOfGroupInput!
+}
+
+input UserUpsertWithoutDiscussionsInput {
+  update: UserUpdateWithoutDiscussionsDataInput!
+  create: UserCreateWithoutDiscussionsInput!
+}
+
+input UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutFollowersInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutFollowersDataInput!
+  create: UserCreateWithoutFollowersInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutFollowingInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutFollowingDataInput!
+  create: UserCreateWithoutFollowingInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutGroupsInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutGroupsDataInput!
+  create: UserCreateWithoutGroupsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutSpacesInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutSpacesDataInput!
+  create: UserCreateWithoutSpacesInput!
+}
+
+input UserWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  discussions_every: DiscussionWhereInput
+  discussions_some: DiscussionWhereInput
+  discussions_none: DiscussionWhereInput
+  spaces_every: SpaceWhereInput
+  spaces_some: SpaceWhereInput
+  spaces_none: SpaceWhereInput
+  groups_every: GroupWhereInput
+  groups_some: GroupWhereInput
+  groups_none: GroupWhereInput
+  following_every: UserWhereInput
+  following_some: UserWhereInput
+  following_none: UserWhereInput
+  followers_every: UserWhereInput
+  followers_some: UserWhereInput
+  followers_none: UserWhereInput
+  likedDiscussions_every: DiscussionWhereInput
+  likedDiscussions_some: DiscussionWhereInput
+  likedDiscussions_none: DiscussionWhereInput
+  sharedDiscussions_every: DiscussionWhereInput
+  sharedDiscussions_some: DiscussionWhereInput
+  sharedDiscussions_none: DiscussionWhereInput
+  savedDiscussions_every: DiscussionWhereInput
+  savedDiscussions_some: DiscussionWhereInput
+  savedDiscussions_none: DiscussionWhereInput
+  savedGroups_every: GroupWhereInput
+  savedGroups_some: GroupWhereInput
+  savedGroups_none: GroupWhereInput
+  savedSpaces_every: SpaceWhereInput
+  savedSpaces_some: SpaceWhereInput
+  savedSpaces_none: SpaceWhereInput
+  adminOfGroup_every: GroupWhereInput
+  adminOfGroup_some: GroupWhereInput
+  adminOfGroup_none: GroupWhereInput
+  adminOfSpace_every: SpaceWhereInput
+  adminOfSpace_some: SpaceWhereInput
+  adminOfSpace_none: SpaceWhereInput
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  name: String
+}
